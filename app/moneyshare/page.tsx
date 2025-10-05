@@ -1,7 +1,92 @@
+"use client";
+
+import calculator from "./../../assets/images/calculator.png";
+import Image from "next/image";
+import money from "./../../assets/images/money (1).png";
+import { useState } from "react";
+import Footer from "@/components/Footer";
+import Link from "next/link";
 export default function Page() {
+  const [Money, setMoney] = useState("");
+  const [Person, setPerson] = useState("");
+  const [moneyShare, setMoneyShare] = useState("0.00");
+  const handleCalculateClick = () => {
+    if (Money == "" || Person == "" || Person == "0") {
+      alert("กรุณาป้อนจำนวนเงินและจำนวนคนก่อนคำนวณ และคนต้องไม่เป็น 0");
+      return;
+    }
+    const result = parseFloat(Money) / parseFloat(Person);
+    setMoneyShare(result.toFixed(2));
+  };
+  const handleCancel = () => {
+    setMoney("");
+    setPerson("");
+    setMoneyShare("0.00");
+    return;
+  };
   return (
     <>
-      <h1>MoneyShare</h1>
+      <div className="w-8/12 border border-gray-500 mx-auto mt-20 mb-10 p-20 flex flex-col items-center rounded-2xl shadow-xl">
+        <Image className="mb-5" src={calculator} alt="calculator" width={150} />
+        <h1 className="text-lg text-blue-600 font-bold mt-3">
+          Varity Calculator V.1.0
+        </h1>
+        <h1 className="text-lg text-blue-600 mt-1 mb-5">โปรแกรมคำนวณ</h1>
+
+        <div className="w-full border border-gray-300 flex flex-col items-center p-5 rounded-xl">
+          <Image className="mb-5" src={money} alt="calculator" width={80} />
+          <h1 className="text-lg text-blue-600 mt-1 mb-5">แชร์เงินกันเถอะ</h1>
+          <div className="w-full flex flex-col mb-3">
+            <label>ป้อนเงิน (บาท)</label>
+            <input
+              value={Money}
+              onChange={(e) => {
+                setMoney(e.target.value);
+              }}
+              type="number"
+              className="border border-gray-300 p-2 rounded"
+            />
+          </div>
+          <div className="w-full flex flex-col ">
+            <label>ป้อนคน</label>
+            <input
+              value={Person}
+              onChange={(e) => {
+                setPerson(e.target.value);
+              }}
+              type="number"
+              className="border border-gray-300 p-2 rounded"
+            />
+          </div>
+
+          <button
+            onClick={handleCalculateClick}
+            type="button"
+            className="w-full text-lg text-white bg-blue-600 px-5 py-2 rounded hover:bg-blue-700 text-center mt-5 cursor-pointer"
+          >
+            คำนวณ
+          </button>
+          <button
+            onClick={handleCancel}
+            type="button"
+            className="w-full text-lg text-white bg-orange-600 px-5 py-2 rounded hover:bg-orange-700 text-center mt-5 cursor-pointer"
+          >
+            ยกเลิก
+          </button>
+          <div className="w-full flex justify-center items-center  mt-3 text-center ">
+            <span>หารกันคนละ</span>
+            <span className="font-bold text-5xl text-red-600 mx-10">
+              {moneyShare}
+            </span>
+            <span>บาท </span>
+          </div>
+        </div>
+
+        <Link className="mt-5 text-blue-600" href="/menu">
+          กลับไปหน้าเมนู
+        </Link>
+      </div>
+      <Footer></Footer>
     </>
   );
 }
