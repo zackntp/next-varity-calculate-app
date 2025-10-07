@@ -24,7 +24,7 @@ export default function Page() {
       return
     }
     const parseHeight = parseFloat(height) / 100 
-    let bmi = parseFloat(weight) / (parseHeight * parseHeight)
+    const bmi = parseFloat(weight) / (parseHeight * parseHeight)
     setBmi(bmi.toFixed(2))
   }
   return (
